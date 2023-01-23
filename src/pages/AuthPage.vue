@@ -3,5 +3,5 @@ export default {};
 </script>
 
 <template>
-  <div>Auth</div>
+  <h1 class="text-3xl text-black font-bold underline">Hello world!</h1>
 </template>

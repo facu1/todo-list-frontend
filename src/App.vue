@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <h1>Hello App!</h1>
+  <h1 class="text-black">Hello App!</h1>
   <p>
     <router-link to="/">Go to Home</router-link>
     <router-link to="/auth">Go to Auth</router-link>
