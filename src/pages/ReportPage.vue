@@ -1,20 +1,11 @@
 <script lang="ts">
-import { useAuth0 } from "@auth0/auth0-vue";
-import TabComponent from "../components/HomePage/TabComponent.vue";
 import MainHeader from "../components/MainHeader.vue";
+import ReportContent from "../components/ReportPage/ReportContent.vue";
 
 export default {
-  setup() {
-    const { user, isLoading } = useAuth0();
-
-    return {
-      user,
-      isLoading,
-    };
-  },
   components: {
     MainHeader,
-    TabComponent,
+    ReportContent,
   },
 };
 </script>
@@ -24,6 +15,6 @@ export default {
     class="flex flex-col p-8 xs:p-10 h-screen text-[#333333] overflow-hidden"
   >
     <MainHeader />
-    <TabComponent />
+    <ReportContent />
   </div>
 </template>
