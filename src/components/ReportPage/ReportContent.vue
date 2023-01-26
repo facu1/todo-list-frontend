@@ -1,8 +1,10 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="overflow-y-auto">
-    <p class="text-2xl font-semibold mt-8 mb-4">Report</p>
+  <div class="overflow-y-auto w-full max-w-xs mx-auto">
+    <p class="text-2xl font-semibold mt-8 lg:mt-6 mb-4 lg:text-center">
+      Report
+    </p>
     <div class="flex flex-col border border-solid rounded-xl p-5">
       <div class="flex flex-col text-center mb-5">
         <p class="mb-3">Average task completion</p>

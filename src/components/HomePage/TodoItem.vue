@@ -41,12 +41,12 @@ export default {
       <StatusSelector />
     </div>
     <div class="flex justify-between items-center">
-      <div class="flex items-center">
+      <div class="flex flex-col xs:flex-row items-center">
         <div class="flex items-center">
           <HeroIconsPaths icon-name="calendar" />
           <p class="text-sm ml-2">23/01/2023</p>
         </div>
-        <div v-if="status === 'Completed'" class="flex items-center ml-3">
+        <div v-if="status === 'Completed'" class="flex items-center xs:ml-3">
           <div class="relative w-6 h-6">
             <HeroIconsPaths
               icon-name="calendarCheck"

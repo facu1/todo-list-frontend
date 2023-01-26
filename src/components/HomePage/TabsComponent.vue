@@ -23,7 +23,9 @@ export default {
 </script>
 
 <template>
-  <div class="h-full flex flex-col overflow-hidden">
+  <div
+    class="h-full flex flex-col w-full max-w-md m-auto lg:hidden overflow-hidden"
+  >
     <TabGroup>
       <TabList class="flex mt-8">
         <Tab v-for="tab in tabs" :key="tab" as="template" v-slot="{ selected }">
@@ -49,5 +51,30 @@ export default {
         </TabPanel>
       </TabPanels>
     </TabGroup>
+  </div>
+  <div
+    class="hidden lg:flex h-full w-full flex-col overflow-hidden max-w-4xl mx-auto text-center mt-6"
+  >
+    <div class="flex">
+      <div
+        v-for="tab in tabs"
+        :key="tab"
+        class="w-1/2 text-lg xs:text-2xl pb-4 mb-4 lg:mb-0"
+      >
+        {{ tab }}
+      </div>
+    </div>
+    <div class="h-full overflow-hidden flex gap-8">
+      <div class="h-full overflow-hidden">
+        <div class="h-full flex flex-col overflow-hidden">
+          <TodosList />
+        </div>
+      </div>
+      <div class="h-full overflow-hidden">
+        <div class="h-full flex flex-col overflow-hidden">
+          <TodosList showCompleted />
+        </div>
+      </div>
+    </div>
   </div>
 </template>

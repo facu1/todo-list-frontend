@@ -10,6 +10,10 @@ export default {
       type: String,
       default: "Pending",
     },
+    showCompleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup() {
     const isOpen = ref(false);
@@ -34,9 +38,10 @@ export default {
       <TodoItem :status="typesOfTodos" />
       <TodoItem :status="typesOfTodos" />
       <TodoItem :status="typesOfTodos" />
+      <TodoItem :status="typesOfTodos" />
     </div>
   </div>
-  <div v-if="typesOfTodos !== 'Completed'" class="mt-4">
+  <div v-if="!showCompleted" class="mt-4">
     <button
       class="flex w-full justify-center bg-[#A533FF] text-white p-3 rounded-xl mt-auto"
       @click="() => setIsOpen(true)"

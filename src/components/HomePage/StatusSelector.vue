@@ -22,7 +22,7 @@ const selectedPerson = ref(statuses[0]);
 
 <template>
   <Listbox v-model="selectedPerson">
-    <div class="relative z-50">
+    <div class="relative z-10">
       <ListboxButton
         class="px-2 py-1 rounded-xl"
         :class="`${selectedPerson.color} `"

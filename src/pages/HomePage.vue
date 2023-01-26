@@ -1,6 +1,6 @@
 <script lang="ts">
 import { useAuth0 } from "@auth0/auth0-vue";
-import TabComponent from "../components/HomePage/TabComponent.vue";
+import TabsComponent from "../components/HomePage/TabsComponent.vue";
 import MainHeader from "../components/MainHeader.vue";
 
 export default {
@@ -14,7 +14,7 @@ export default {
   },
   components: {
     MainHeader,
-    TabComponent,
+    TabsComponent,
   },
 };
 </script>
@@ -24,6 +24,6 @@ export default {
     class="flex flex-col p-8 xs:p-10 h-screen text-[#333333] overflow-hidden"
   >
     <MainHeader />
-    <TabComponent />
+    <TabsComponent />
   </div>
 </template>
