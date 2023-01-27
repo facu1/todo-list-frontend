@@ -96,10 +96,10 @@ export default {
       </MenuItems>
     </HeadlessMenu>
     <div class="hidden lg:flex gap-11 text-xl justify-end w-48">
-      <div class="flex items-center gap-2 lg:mr-2" @click="logout">
+      <button class="flex items-center gap-2 lg:mr-2" @click="logout">
         <HeroIconsPaths iconName="logout" iconClass="lg:hidden" />
         <p>Log out</p>
-      </div>
+      </button>
       <div class="w-12 xs:w-14 h-12 xs:h-14 bg-[#D9D9D9] rounded-full" />
     </div>
   </div>

@@ -2,15 +2,20 @@
 import { useAuth0 } from "@auth0/auth0-vue";
 import TabsComponent from "../components/HomePage/TabsComponent.vue";
 import MainHeader from "../components/MainHeader.vue";
+import { useTodosStore } from "../store";
 
 export default {
   setup() {
-    const { user, isLoading } = useAuth0();
+    const todosStore = useTodosStore();
 
-    return {
-      user,
-      isLoading,
+    const getTodos = async () => {
+      const { getAccessTokenSilently } = useAuth0();
+      void todosStore.getTodos(await getAccessTokenSilently());
     };
+
+    getTodos();
+
+    return {};
   },
   components: {
     MainHeader,

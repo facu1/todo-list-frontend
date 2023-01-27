@@ -11,6 +11,10 @@ export default {
       type: Function,
       required: true,
     },
+    deleteFunction: {
+      type: Function,
+      required: true,
+    },
   },
   components: { HeadlessDialog, DialogPanel, BackdropComponent },
 };
@@ -38,7 +42,7 @@ export default {
             Cancel
           </button>
           <button
-            @click="setIsOpen(false)"
+            @click="() => deleteFunction()"
             class="w-full max-w-[7rem] bg-[#A533FF] text-white xs:py-2 px-3 xs:px-7 rounded-xl"
           >
             Delete

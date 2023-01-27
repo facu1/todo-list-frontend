@@ -1,5 +1,9 @@
 <script lang="ts">
+import { useAuth0 } from "@auth0/auth0-vue";
 import { Dialog as HeadlessDialog, DialogPanel } from "@headlessui/vue";
+import { ref } from "vue";
+import { useTodosStore } from "../../store";
+import { NewTodo } from "../../types";
 import BackdropComponent from "../BackdropComponent.vue";
 export default {
   props: {
@@ -11,6 +15,28 @@ export default {
       type: Function,
       required: true,
     },
+  },
+  setup(props) {
+    const todosStore = useTodosStore();
+    const { getAccessTokenSilently } = useAuth0();
+    const titleInput = ref<string>("");
+    const descriptionInput = ref<string>("");
+
+    const createNewTodoFunction = async () => {
+      const newTodo: NewTodo = {
+        title: titleInput.value,
+        description: descriptionInput.value,
+      };
+      todosStore.createTodo(await getAccessTokenSilently(), newTodo);
+      props.setIsOpen(false);
+    };
+
+    return {
+      todosStore,
+      titleInput,
+      descriptionInput,
+      createNewTodoFunction,
+    };
   },
   components: { HeadlessDialog, DialogPanel, BackdropComponent },
 };
@@ -32,11 +58,13 @@ export default {
           type="text"
           placeholder="Title"
           class="w-full text-xl font-semibold text-[#666666] mb-4"
+          v-model="titleInput"
         />
         <textarea
           placeholder="Description (optional)"
           rows="6"
           class="w-full font-semibold text-[#666666]"
+          v-model="descriptionInput"
         />
 
         <div class="flex justify-between font-semibold xs:text-xl">
@@ -47,7 +75,7 @@ export default {
             Cancel
           </button>
           <button
-            @click="setIsOpen(false)"
+            @click="createNewTodoFunction"
             class="w-full max-w-[7rem] bg-[#A533FF] text-white xs:py-2 px-3 xs:px-7 rounded-xl"
           >
             Save

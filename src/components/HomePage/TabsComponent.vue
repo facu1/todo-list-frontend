@@ -1,14 +1,28 @@
 <script lang="ts">
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useTodosStore } from "../../store";
+import { TodoState } from "../../types";
 import TodosList from "./TodosList.vue";
 
 export default {
   setup() {
+    const todosStore = useTodosStore();
+
     const tabs = ref(["Created", "Completed"]);
+
+    const openTodos = computed(() =>
+      todosStore.todos.filter((todo) => todo.state !== TodoState.Completed)
+    );
+
+    const closedTodos = computed(() =>
+      todosStore.todos.filter((todo) => todo.state === TodoState.Completed)
+    );
 
     return {
       tabs,
+      openTodos,
+      closedTodos,
     };
   },
   components: {
@@ -44,10 +58,10 @@ export default {
       </TabList>
       <TabPanels class="h-full overflow-hidden">
         <TabPanel class="h-full flex flex-col overflow-hidden">
-          <TodosList />
+          <TodosList :todos="openTodos" />
         </TabPanel>
         <TabPanel class="h-full flex flex-col overflow-hidden">
-          <TodosList typesOfTodos="Completed" />
+          <TodosList :todos="closedTodos" showCompleted />
         </TabPanel>
       </TabPanels>
     </TabGroup>
@@ -65,14 +79,14 @@ export default {
       </div>
     </div>
     <div class="h-full overflow-hidden flex gap-8">
-      <div class="h-full overflow-hidden">
+      <div class="h-full w-full overflow-hidden">
         <div class="h-full flex flex-col overflow-hidden">
-          <TodosList />
+          <TodosList :todos="openTodos" />
         </div>
       </div>
-      <div class="h-full overflow-hidden">
+      <div class="h-full w-full overflow-hidden">
         <div class="h-full flex flex-col overflow-hidden">
-          <TodosList showCompleted />
+          <TodosList :todos="closedTodos" showCompleted />
         </div>
       </div>
     </div>

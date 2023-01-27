@@ -17,3 +17,28 @@ export enum IconNames {
   REPORT = "report",
   ARROWDOWN = "arrowDown",
 }
+
+export interface IUser {
+  id: string;
+  externalId: string;
+  deletedTodos: number;
+  todos: ITodo[];
+}
+
+export enum TodoState {
+  "Pending" = "Pending",
+  "In Progress" = "In Progress",
+  "Completed" = "Completed",
+}
+
+export interface ITodo {
+  id: string;
+  title: string;
+  description?: string;
+  state: TodoState;
+  created: string;
+  dateOfCompleted?: string;
+  user: string;
+}
+
+export type NewTodo = Pick<ITodo, "title" | "description">;

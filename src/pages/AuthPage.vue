@@ -11,24 +11,22 @@ export default {
     const router = useRouter();
     const { isAuthenticated, isLoading, user, loginWithRedirect } = useAuth0();
     const loginLoading = ref<boolean>(false);
+    const login = () => {
+      loginLoading.value = true;
+      loginWithRedirect();
+    };
 
     watch(isAuthenticated, (newIsAuthenticated, prevIsAuthenticated) => {
-      if (newIsAuthenticated && !prevIsAuthenticated) {
-        setTimeout(() => {
-          router.push(PathsOfRoutes.HOME);
-        }, 1000);
-      }
+      if (newIsAuthenticated && !prevIsAuthenticated)
+        setTimeout(() => router.push(PathsOfRoutes.HOME), 1000);
     });
 
     return {
-      isAuthenticated: isAuthenticated,
-      isLoading: isLoading,
+      isAuthenticated,
+      isLoading,
       loginLoading,
-      user: user,
-      login: () => {
-        loginLoading.value = true;
-        loginWithRedirect();
-      },
+      user,
+      login,
     };
   },
   components: {

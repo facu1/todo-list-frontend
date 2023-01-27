@@ -1,47 +1,101 @@
-<script setup lang="ts">
-import { ref } from "vue";
+<script lang="ts">
+import { ref, defineComponent, PropType } from "vue";
 import {
   Listbox,
   ListboxButton,
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+import { ITodo, TodoState } from "../../types";
+import { useTodosStore } from "../../store";
+import { useAuth0 } from "@auth0/auth0-vue";
 
-const statuses = [
-  { id: "01", name: "Pending", color: "bg-gray", unavailable: false },
-  {
-    id: "02",
-    name: "In Progress",
-    color: "bg-in-progress",
-    unavailable: false,
+export default defineComponent({
+  props: {
+    todo: {
+      type: Object as PropType<ITodo>,
+      required: true,
+    },
   },
-  { id: "03", name: "Completed", color: "bg-completed", unavailable: false },
-];
-const selectedPerson = ref(statuses[0]);
+  setup(props) {
+    const todosStore = useTodosStore();
+    const { getAccessTokenSilently } = useAuth0();
+    let statuses: { label: TodoState; bg: string }[] = [];
+    let todoColor = "";
+
+    switch (props.todo.state) {
+      case TodoState["In Progress"]:
+        todoColor = "bg-in-progress";
+        statuses = [
+          {
+            label: TodoState.Pending,
+            bg: "bg-gray",
+          },
+          {
+            label: TodoState.Completed,
+            bg: "bg-completed",
+          },
+        ];
+        break;
+      case TodoState.Pending:
+        todoColor = "bg-gray";
+        statuses = [
+          {
+            label: TodoState["In Progress"],
+            bg: "bg-in-progress",
+          },
+        ];
+        break;
+    }
+
+    const selectedPerson = ref(statuses[0]);
+
+    const updateState = async (status: TodoState) => {
+      const token = await getAccessTokenSilently();
+      const updatedTodo: ITodo = {
+        ...props.todo,
+        state: status,
+      };
+      todosStore.updateTodoState(token, updatedTodo);
+    };
+
+    return {
+      todoColor,
+      statuses,
+      selectedPerson,
+      updateState,
+    };
+  },
+  components: {
+    Listbox,
+    ListboxButton,
+    ListboxOptions,
+    ListboxOption,
+  },
+});
 </script>
 
 <template>
   <Listbox v-model="selectedPerson">
     <div class="relative z-10">
-      <ListboxButton
-        class="px-2 py-1 rounded-xl"
-        :class="`${selectedPerson.color} `"
-        >{{ selectedPerson.name }}</ListboxButton
-      >
+      <ListboxButton class="px-2 py-1 rounded-xl" :class="todoColor">{{
+        todo.state
+      }}</ListboxButton>
       <ListboxOptions
-        class="absolute flex flex-col gap-2 right-0 w-32 mt-2 p-2 rounded-xl bg-gray"
+        class="absolute flex flex-col gap-2 top-0 right-0 mr-20 w-32 p-2 rounded-xl bg-gray"
       >
         <ListboxOption
-          v-for="person in statuses"
-          :key="person.id"
-          :value="person"
+          v-for="status in statuses"
+          :key="status.label"
+          :value="status"
           :class="`rounded-xl`"
+          @click="updateState(status.label)"
         >
           <div class="flex items-center">
             <div
-              :class="`${person.color} w-4 h-4 mr-2 border border-solid rounded`"
+              :class="`${status.bg} w-4 h-4 mr-2 border border-solid rounded`"
             />
-            <p>{{ person.name }}</p>
+            <p>{{ status.label }}</p>
           </div>
         </ListboxOption>
       </ListboxOptions>
