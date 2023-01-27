@@ -1,5 +1,5 @@
 <script lang="ts">
-import { ref, defineComponent, PropType } from "vue";
+import { ref, computed, defineComponent, PropType } from "vue";
 import HeroIconsPaths from "../HeroIconsPaths.vue";
 import DeleteModal from "./DeleteModal.vue";
 import StatusSelector from "./StatusSelector.vue";
@@ -26,6 +26,17 @@ export default defineComponent({
       isOpen.value = false;
     };
 
+    const parsedDate = computed(() => {
+      const created = new Date(props.todo.created).toLocaleDateString();
+
+      if (props.todo.dateOfCompleted)
+        return {
+          created,
+          deleted: new Date(props.todo.dateOfCompleted).toLocaleDateString(),
+        };
+      return { created };
+    });
+
     return {
       userStore,
       TodoState,
@@ -33,6 +44,7 @@ export default defineComponent({
       isOpen,
       setIsOpen,
       deleteTodo,
+      parsedDate,
     };
   },
   components: {
@@ -59,7 +71,7 @@ export default defineComponent({
       <div class="flex flex-col xs:flex-row items-center">
         <div class="flex items-center">
           <HeroIconsPaths icon-name="calendar" />
-          <p class="text-sm ml-2">{{ todo.created }}</p>
+          <p class="text-sm ml-2">{{ parsedDate.created }}</p>
         </div>
         <div
           v-if="todo.state === TodoState.Completed"
@@ -75,7 +87,7 @@ export default defineComponent({
               icon-class="w-5 h-5 top-1 left-1 absolute"
             />
           </div>
-          <p class="text-sm ml-2">{{ todo.dateOfCompleted }}</p>
+          <p class="text-sm ml-2">{{ parsedDate.deleted }}</p>
         </div>
       </div>
       <button class="text-[#FF0000]" @click="setIsOpen(true)">

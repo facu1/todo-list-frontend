@@ -22,7 +22,7 @@ export interface IUser {
   id: string;
   externalId: string;
   deletedTodos: number;
-  todos: ITodo[];
+  todos: string[];
 }
 
 export enum TodoState {

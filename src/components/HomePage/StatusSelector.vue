@@ -82,7 +82,7 @@ export default defineComponent({
         todo.state
       }}</ListboxButton>
       <ListboxOptions
-        class="absolute flex flex-col gap-2 top-0 right-0 mr-20 w-32 p-2 rounded-xl bg-gray"
+        class="absolute flex flex-col gap-2 right-0 mt-2 w-32 p-2 rounded-xl bg-gray"
       >
         <ListboxOption
           v-for="status in statuses"
@@ -91,7 +91,7 @@ export default defineComponent({
           :class="`rounded-xl`"
           @click="updateState(status.label)"
         >
-          <div class="flex items-center">
+          <div class="flex items-center cursor-pointer">
             <div
               :class="`${status.bg} w-4 h-4 mr-2 border border-solid rounded`"
             />
