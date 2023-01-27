@@ -2,6 +2,7 @@ import { todosService } from "../../services/todos";
 import { ITodo, NewTodo } from "../../types";
 import { TodosState } from "./types";
 import { useErrorsStore } from "../index";
+import { AxiosError } from "axios";
 
 export const actions = {
   async getTodos(this: TodosState, token: string) {
@@ -13,8 +14,11 @@ export const actions = {
 
       this.todos = todos;
     } catch (error) {
-      if (error instanceof Error) errorsStore.setErrorMessage(error.message);
-      errorsStore.setErrorMessage("Something was wrong.");
+      if (error instanceof AxiosError)
+        errorsStore.setErrorMessage(error.response?.data.error);
+      else if (error instanceof Error)
+        errorsStore.setErrorMessage(error.message);
+      else errorsStore.setErrorMessage("Something was wrong.");
     }
 
     this.isLoading = false;
@@ -28,8 +32,11 @@ export const actions = {
 
       this.todos = [...this.todos, addedTodo];
     } catch (error) {
-      if (error instanceof Error) errorsStore.setErrorMessage(error.message);
-      errorsStore.setErrorMessage("Something was wrong.");
+      if (error instanceof AxiosError)
+        errorsStore.setErrorMessage(error.response?.data.error);
+      else if (error instanceof Error)
+        errorsStore.setErrorMessage(error.message);
+      else errorsStore.setErrorMessage("Something was wrong.");
     }
 
     this.isLoading = false;
@@ -46,8 +53,11 @@ export const actions = {
         return todo;
       });
     } catch (error) {
-      if (error instanceof Error) errorsStore.setErrorMessage(error.message);
-      errorsStore.setErrorMessage("Something was wrong.");
+      if (error instanceof AxiosError)
+        errorsStore.setErrorMessage(error.response?.data.error);
+      else if (error instanceof Error)
+        errorsStore.setErrorMessage(error.message);
+      else errorsStore.setErrorMessage("Something was wrong.");
     }
 
     this.isLoading = false;
@@ -61,8 +71,11 @@ export const actions = {
 
       this.todos = this.todos.filter((todo) => todo.id !== id);
     } catch (error) {
-      if (error instanceof Error) errorsStore.setErrorMessage(error.message);
-      errorsStore.setErrorMessage("Something was wrong.");
+      if (error instanceof AxiosError)
+        errorsStore.setErrorMessage(error.response?.data.error);
+      else if (error instanceof Error)
+        errorsStore.setErrorMessage(error.message);
+      else errorsStore.setErrorMessage("Something was wrong.");
     }
 
     this.isLoading = false;

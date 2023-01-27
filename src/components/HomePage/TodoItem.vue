@@ -57,7 +57,8 @@ export default defineComponent({
 
 <template>
   <div
-    class="border border-solid rounded-xl flex flex-col p-5 pb-1"
+    class="border border-solid rounded-xl flex flex-col"
+    :class="todo.description ? 'p-5 pb-1' : 'p-5'"
     :key="`${todo.id}_${todo.state}`"
   >
     <div class="flex justify-between items-center mb-5">
