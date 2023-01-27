@@ -1,5 +1,6 @@
 <script lang="ts">
 import { useAuth0 } from "@auth0/auth0-vue";
+import BackdropComponent from "../components/BackdropComponent.vue";
 import MainHeader from "../components/MainHeader.vue";
 import ReportContent from "../components/ReportPage/ReportContent.vue";
 import { useTodosStore, useUserStore } from "../store";
@@ -8,6 +9,7 @@ export default {
   components: {
     MainHeader,
     ReportContent,
+    BackdropComponent,
   },
   setup() {
     const todosStore = useTodosStore();
@@ -23,7 +25,7 @@ export default {
 
     getUserInfoAndTodos();
 
-    return {};
+    return { todosStore, userStore };
   },
 };
 </script>
@@ -34,5 +36,9 @@ export default {
   >
     <MainHeader />
     <ReportContent />
+    <BackdropComponent
+      v-if="todosStore.isLoading || userStore.isLoading"
+      class="z-50"
+    />
   </div>
 </template>
