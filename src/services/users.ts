@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IUser } from "../types";
 
-const baseUrl = "/api/user";
+const baseUrl = `${import.meta.env.VITE_API_URL}/api/user`;
 
 const generateConfig = (token: string) => ({
   headers: { Authorization: `Bearer ${token}` },

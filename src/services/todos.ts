@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ITodo, NewTodo } from "../types";
 
-const baseUrl = "/api/todos";
+const baseUrl = `${import.meta.env.VITE_API_URL}/api/todos`;
 
 const generateConfig = (token: string) => ({
   headers: { Authorization: `Bearer ${token}` },
